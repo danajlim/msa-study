@@ -1,2 +1,15 @@
 server:
   port: 8081
+
+spring:
+  cloud:
+    discovery:
+      client:
+        simple:
+          instances:
+            noti-service:
+              - service-id: noti-service
+                uri: http://localhost:8082
+              - service-id: noti-service
+                uri: http://localhost:8082
+
