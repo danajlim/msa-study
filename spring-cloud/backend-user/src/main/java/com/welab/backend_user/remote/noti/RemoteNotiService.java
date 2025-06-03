@@ -1,16 +1,17 @@
 package com.welab.backend_user.remote.noti;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import com.welab.backend_user.remote.noti.dto.SendSmsDto;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
-@Service
-@RequiredArgsConstructor
-public class RemoteNotiService {
-    private final RestTemplate restTemplate;
+@FeignClient(name="backend-noti", path = "/backend/noti/v1")
+public interface RemoteNotiService {
 
-    public String callNotiHello() {
-        return restTemplate.getForObject(
-                "http://alim-service/backend/noti/v1/hello", String.class);
-    }
+    @GetMapping(value = "/hello")
+    public String sms();
+
+    @PostMapping(value="/sms")
+    public SendSmsDto.Response sendSms(@RequestBody SendSmsDto.Request request);
 }

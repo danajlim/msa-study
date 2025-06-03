@@ -1,15 +1,13 @@
 server:
   port: 8081
 
-spring:
-  cloud:
-    discovery:
-      client:
-        simple:
-          instances:
-            noti-service:
-              - service-id: noti-service
-                uri: http://localhost:8082
-              - service-id: noti-service
-                uri: http://localhost:8082
-
+eureka:
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 10 # 하트비트 간격 (기본30초 )
+    lease-expiration-duration-in-seconds: 30 # 만료 시간 (기본90초 )
+  client:
+    register-with-eureka: true #eureka에 내가 누구인지 어디서 동작하는지 신고함
+    fetch-registry: true #다른 서비스 목록들도 내려받음
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
