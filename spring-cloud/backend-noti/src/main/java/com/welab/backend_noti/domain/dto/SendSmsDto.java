@@ -1,4 +1,4 @@
-package com.welab.backend_noti.api.domain.dto;
+package com.welab.backend_noti.domain.dto;
 
 import lombok.AccessLevel;
 import lombok.Getter;

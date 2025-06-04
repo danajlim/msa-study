@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface RemoteNotiService {
 
     @GetMapping(value = "/hello")
-    public String sms();
+    String hello();
 
     @PostMapping(value="/sms")
-    public SendSmsDto.Response sendSms(@RequestBody SendSmsDto.Request request);
+    SendSmsDto.Response sendSms(@RequestBody SendSmsDto.Request request);
 }

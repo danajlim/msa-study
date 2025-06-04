@@ -17,7 +17,7 @@ public class UserController {
 
     @GetMapping(value = "/test")
     public String test() {
-        return remoteNotiService.sms();
+        return remoteNotiService.hello();
     }
 
     @PostMapping(value = "/sms")

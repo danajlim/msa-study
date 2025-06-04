@@ -1,6 +1,6 @@
 package com.welab.backend_noti.api.backend;
 
-import com.welab.backend_noti.api.domain.dto.SendSmsDto;
+import com.welab.backend_noti.domain.dto.SendSmsDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -22,4 +22,5 @@ public class BackendNotiController {
         response.setResult("OK");
         return response;
     }
+    
 }
