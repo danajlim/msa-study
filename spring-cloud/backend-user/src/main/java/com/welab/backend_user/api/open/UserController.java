@@ -1,5 +1,7 @@
 package com.welab.backend_user.api.open;
 
+import com.welab.backend_user.common.dto.ApiResponseDto;
+import com.welab.backend_user.common.exception.NotFound;
 import com.welab.backend_user.remote.noti.RemoteNotiService;
 import com.welab.backend_user.remote.noti.dto.SendSmsDto;
 import lombok.RequiredArgsConstructor;
@@ -16,13 +18,15 @@ public class UserController {
     private final RemoteNotiService remoteNotiService;
 
     @GetMapping(value = "/test")
-    public String test() {
-        return remoteNotiService.hello();
+    public ApiResponseDto<String> test() {
+        throw new NotFound("해당 게시물을 찾을 수 없습니다.");
+//        String result = remoteNotiService.hello();
+//        return ApiResponseDto.createOk(result);
     }
 
     @PostMapping(value = "/sms")
-    public String sms(@RequestBody SendSmsDto.Request request) {
-        var response = remoteNotiService.sendSms(request);
-        return "OK";
+    public ApiResponseDto<SendSmsDto.Response> sms(@RequestBody SendSmsDto.Request request) {
+        var result = remoteNotiService.sendSms(request);
+        return ApiResponseDto.createOk(result);
     }
 }
