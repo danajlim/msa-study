@@ -4,6 +4,7 @@ import com.welab.backend_user.common.exception.BadParameter;
 import com.welab.backend_user.common.exception.NotFound;
 import com.welab.backend_user.domain.SiteUser;
 import com.welab.backend_user.domain.dto.SiteUserLoginDto;
+import com.welab.backend_user.domain.dto.SiteUserRefreshDto;
 import com.welab.backend_user.domain.dto.SiteUserRegisterDto;
 import com.welab.backend_user.domain.repository.SiteUserRepository;
 import com.welab.backend_user.secret.hash.SecureHashUtils;
@@ -30,6 +31,7 @@ public class SiteUserService {
         siteUserRepository.save(siteUser);
     }
 
+    //로그인 로직
     @Transactional(readOnly = true)
     public TokenDto.AccessRefreshToken login(SiteUserLoginDto loginDto) {
 
@@ -48,6 +50,25 @@ public class SiteUserService {
 
         //로그인 성공시 jwt access+refresh 토큰 생성
         return tokenGenerator.generateAccessRefreshToken(loginDto.getUserId(), "WEB");
+    }
 
+    //리프레시 토큰을 이용해 새로운 액세스 토큰을 발급
+    //SiteUserRefreshDto - 클라이언트가 보낸 리프레시 토큰
+    public TokenDto.AccessToken refresh(SiteUserRefreshDto refreshDto) {
+
+        //리프레시 토큰에서 유저 ID를 추출
+        String userId = tokenGenerator.validateJwtToken(refreshDto.getToken());
+        if (userId == null) {
+            throw new BadParameter("토큰이 유효하지 않습니다");
+        }
+
+        //해당 유저가 실제 DB에 존재하는지 확인
+        SiteUser user = siteUserRepository.findByUserId(userId);
+        if (user == null) {
+            throw new NotFound("사용자를 찾을 수 없습니다");
+        }
+
+        //새로운 Access Token 발급
+        return tokenGenerator.generateAccessToken(userId, "WEB");
     }
 }

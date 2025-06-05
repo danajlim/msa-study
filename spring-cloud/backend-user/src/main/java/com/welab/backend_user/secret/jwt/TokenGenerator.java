@@ -2,6 +2,7 @@ package com.welab.backend_user.secret.jwt;
 
 import com.welab.backend_user.secret.jwt.dto.TokenDto;
 import com.welab.backend_user.secret.jwt.props.JwtConfigProperties;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -85,6 +86,42 @@ public class TokenGenerator {
         }
 
         return expiresIn;
+    }
+
+    //전달받은 토큰이 유효한 refresh token인지 확인하고, 맞으면 userId 반환
+    //Claims : JWT에 들어있는 데이터를 꺼낼 수 있는 Map 같은 객체
+    public String validateJwtToken(String refreshToken) {
+        String userId = null;
+        final Claims claims = this.verifyAndGetClaims(refreshToken);
+        if (claims == null) {
+            return null;
+        }
+
+        Date expirationDate = claims.getExpiration();
+        if (expirationDate == null || expirationDate.before(new Date())) {
+            return null;
+        }
+
+        userId = claims.get("userId", String.class);
+
+        String tokenType = claims.get("tokenType", String.class);
+        if (!"refresh".equals(tokenType)) {
+            return null;
+        }
+
+        return userId;
+    }
+
+    //전달받은 JWT 문자열을 파싱해서 Claims 객체를 추출
+    private Claims verifyAndGetClaims(String token) {
+        Claims claims;
+        try {
+            claims = Jwts.parser().verifyWith(getSecretKey()).build().parseSignedClaims(token).getPayload();
+        }
+        catch (Exception e) {
+            claims = null;
+        }
+        return claims;
     }
 
 }

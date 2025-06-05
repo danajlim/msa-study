@@ -2,6 +2,7 @@ package com.welab.backend_user.api.open;
 
 import com.welab.backend_user.common.dto.ApiResponseDto;
 import com.welab.backend_user.domain.dto.SiteUserLoginDto;
+import com.welab.backend_user.domain.dto.SiteUserRefreshDto;
 import com.welab.backend_user.domain.dto.SiteUserRegisterDto;
 import com.welab.backend_user.remote.noti.service.SiteUserService;
 import com.welab.backend_user.secret.jwt.dto.TokenDto;
@@ -35,6 +36,12 @@ public class UserAuthController {
 
         TokenDto.AccessRefreshToken token = siteUserService.login(loginDto);
         return ApiResponseDto.createOk(token);
-
     }
+
+    @PostMapping(value = "/refresh")
+    public ApiResponseDto<TokenDto.AccessToken> refresh(@RequestBody @Valid SiteUserRefreshDto refreshDto) {
+        TokenDto.AccessToken token = siteUserService.refresh(refreshDto);
+        return ApiResponseDto.createOk(token);
+    }
+
 }
