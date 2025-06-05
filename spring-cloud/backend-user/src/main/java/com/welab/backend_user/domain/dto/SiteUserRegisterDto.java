@@ -1,6 +1,7 @@
 package com.welab.backend_user.domain.dto;
 
 import com.welab.backend_user.domain.SiteUser;
+import com.welab.backend_user.secret.hash.SecureHashUtils;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,11 +21,11 @@ public class SiteUserRegisterDto {
     //DTO → Entity 변환
     public SiteUser toEntity() {
         SiteUser siteUser = new SiteUser();
+
         siteUser.setUserId(this.userId);
+        siteUser.setPassword(SecureHashUtils.hash(this.password));
         siteUser.setPhoneNumber(this.phoneNumber);
-        // TODO: SHA1 또는SHA256으로 password를 해시 값으로 변환
-        String hashedPassword = this.password;
-        siteUser.setPassword(hashedPassword);
+
         return siteUser;
     }
 
