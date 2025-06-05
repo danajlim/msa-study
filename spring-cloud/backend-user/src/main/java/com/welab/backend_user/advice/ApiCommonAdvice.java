@@ -1,7 +1,9 @@
 package com.welab.backend_user.advice;
 
 import com.welab.backend_user.common.dto.ApiResponseDto;
+import com.welab.backend_user.common.exception.BadParameter;
 import com.welab.backend_user.common.exception.ClientError;
+import com.welab.backend_user.common.exception.NotFound;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,24 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @Order(value=1) //순위 부여
 @RestControllerAdvice
 public class ApiCommonAdvice {
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({BadParameter.class})
+    public ApiResponseDto<String> handleBadParameter(BadParameter e) {
+        return ApiResponseDto.createError(
+                e.getErrorCode(),
+                e.getErrorMessage()
+        );
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler({NotFound.class})
+    public ApiResponseDto<String> handleNotFound(NotFound e) {
+        return ApiResponseDto.createError(
+                e.getErrorCode(),
+                e.getErrorMessage()
+        );
+    }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({ClientError.class})
