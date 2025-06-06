@@ -7,6 +7,8 @@ import com.welab.backend_user.domain.dto.SiteUserLoginDto;
 import com.welab.backend_user.domain.dto.SiteUserRefreshDto;
 import com.welab.backend_user.domain.dto.SiteUserRegisterDto;
 import com.welab.backend_user.domain.repository.SiteUserRepository;
+import com.welab.backend_user.remote.noti.RemoteNotiService;
+import com.welab.backend_user.remote.noti.dto.SendSmsDto;
 import com.welab.backend_user.secret.hash.SecureHashUtils;
 import com.welab.backend_user.secret.jwt.TokenGenerator;
 import com.welab.backend_user.secret.jwt.dto.TokenDto;
@@ -22,13 +24,19 @@ public class SiteUserService {
 
     private final SiteUserRepository siteUserRepository;
     private final TokenGenerator tokenGenerator;
+    private final RemoteNotiService remoteNotiService;
 
-    //저장 로직 처리
+    //회원가입 로직
     @Transactional
     public void registerUser(SiteUserRegisterDto registerDto) {
         SiteUser siteUser = registerDto.toEntity();
 
         siteUserRepository.save(siteUser);
+
+        //siteUser 객체를 바탕으로 문자 전송용 요청 DTO를 만듦
+        SendSmsDto.Request request = SendSmsDto.Request.fromEntity(siteUser);
+        remoteNotiService.sendSms(request); //문자 발송 기능 호출
+
     }
 
     //로그인 로직

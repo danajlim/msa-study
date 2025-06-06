@@ -13,6 +13,7 @@ public class SendSmsDto {
         private String phoneNumber;
         private String title;
         private String message;
+
     }
 
     @Getter @Setter

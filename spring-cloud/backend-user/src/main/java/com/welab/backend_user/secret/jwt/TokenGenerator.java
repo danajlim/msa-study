@@ -19,7 +19,6 @@ import java.util.Date;
 public class TokenGenerator {
 
     private final JwtConfigProperties configProperties; //Jwt 관련 설정 값 가져오기
-    private final AssertFalseValidator assertFalseValidator;
     private volatile SecretKey secretKey; //실제 Jwt 서명할때 쓰이는 키. 한번만 디코딩해서 캐싱함
 
     //yml에 있는 secretKey 문자열을 한 번만 디코딩해서 SecretKey 객체로 변환
