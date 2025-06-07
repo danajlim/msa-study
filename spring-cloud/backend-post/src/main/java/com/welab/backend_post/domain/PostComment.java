@@ -1,6 +1,5 @@
 package com.welab.backend_post.domain;
 
-import com.azure.core.annotation.Get;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

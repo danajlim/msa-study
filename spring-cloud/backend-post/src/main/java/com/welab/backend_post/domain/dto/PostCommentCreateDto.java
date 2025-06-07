@@ -1,13 +1,12 @@
 package com.welab.backend_post.domain.dto;
 
-import com.azure.core.annotation.Get;
 import com.welab.backend_post.common.web.context.GatewayRequestHeaderUtils;
 import com.welab.backend_post.domain.PostComment;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 //댓글 생성 요청 데이터 DTO
 @Getter @Setter

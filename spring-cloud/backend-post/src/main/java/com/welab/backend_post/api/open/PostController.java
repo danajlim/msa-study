@@ -4,6 +4,7 @@ import com.welab.backend_post.common.dto.ApiResponseDto;
 import com.welab.backend_post.domain.dto.PostCommentCreateDto;
 import com.welab.backend_post.domain.dto.PostCreateDto;
 import com.welab.backend_post.service.PostService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 
 @Slf4j
 @RestController

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class BackendNotiController {
 
     @GetMapping(value = "/hello")
-    public String hello() {
+    public String sms() {
         return "알림 백엔드 서비스가 호출되었습니다";
     }
 

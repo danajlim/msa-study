@@ -7,7 +7,7 @@ import lombok.ToString;
 
 //공통 응답 DTO 설계
 @ToString
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @Getter
 public class ApiResponseDto<T> {
     private String code;

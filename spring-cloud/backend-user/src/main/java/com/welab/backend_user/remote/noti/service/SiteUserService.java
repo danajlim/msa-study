@@ -3,6 +3,7 @@ package com.welab.backend_user.remote.noti.service;
 import com.welab.backend_user.common.exception.BadParameter;
 import com.welab.backend_user.common.exception.NotFound;
 import com.welab.backend_user.domain.SiteUser;
+import com.welab.backend_user.domain.dto.SiteUserInfoDto;
 import com.welab.backend_user.domain.dto.SiteUserLoginDto;
 import com.welab.backend_user.domain.dto.SiteUserRefreshDto;
 import com.welab.backend_user.domain.dto.SiteUserRegisterDto;
@@ -79,4 +80,20 @@ public class SiteUserService {
         //새로운 Access Token 발급
         return tokenGenerator.generateAccessToken(userId, "WEB");
     }
+
+    //사용자 정보 조회 후 SiteUserInfoDto로 변환
+    @Transactional(readOnly = true)
+    public SiteUserInfoDto userInfo(String userId){
+
+        //userId로 사용자 조회
+        SiteUser user = siteUserRepository.findByUserId(userId);
+        if (user == null) {
+            throw new NotFound("사용자를 찾을 수 없습니다");
+        }
+
+        //객체를 DTO로 변환하여 반환
+        return SiteUserInfoDto.fromEntity(user);
+    }
+
+
 }
