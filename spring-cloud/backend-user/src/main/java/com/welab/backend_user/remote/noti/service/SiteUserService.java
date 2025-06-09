@@ -2,6 +2,7 @@ package com.welab.backend_user.remote.noti.service;
 
 import com.welab.backend_user.common.exception.BadParameter;
 import com.welab.backend_user.common.exception.NotFound;
+import com.welab.backend_user.common.type.ActionAndId;
 import com.welab.backend_user.domain.SiteUser;
 import com.welab.backend_user.domain.dto.SiteUserInfoDto;
 import com.welab.backend_user.domain.dto.SiteUserLoginDto;
@@ -19,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.swing.*;
 
 @Service
 @Slf4j
@@ -94,6 +97,16 @@ public class SiteUserService {
 
         //객체를 DTO로 변환하여 반환
         return SiteUserInfoDto.fromEntity(user);
+    }
+
+    //회원가입하고 알림 뜨게 하기
+    @Transactional
+    public ActionAndId registerUserAndNotify(SiteUserRegisterDto registerDto) {
+        SiteUser siteUser = registerDto.toEntity();
+
+        siteUserRepository.save(siteUser);
+        //Create” + 유저 ID를 담은 ActionAndId를 반환
+        return ActionAndId.of("Create", siteUser.getId());
     }
 
 
