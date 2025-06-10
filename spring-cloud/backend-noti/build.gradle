@@ -37,6 +37,11 @@ dependencies {
 	implementation 'org.springframework.kafka:spring-kafka'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
 
+	//zipkin
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'io.micrometer:micrometer-tracing-bridge-otel'
+	implementation 'io.opentelemetry:opentelemetry-exporter-zipkin' // Zipkin으로 내보낼 경우
+
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 
 	compileOnly 'org.projectlombok:lombok'

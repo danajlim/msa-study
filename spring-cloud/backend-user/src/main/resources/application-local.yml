@@ -48,9 +48,20 @@ spring:
     config:
       discovery:
         enabled: false
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
 jwt:
   expires-in: 86400 # 1day
   mobile-expires-in: 31536000
   table-expires-in: 31536000
   secret-key: AADfaskllew32dsfasdTG764Gdslkj298GsWg86G
 
+management:
+  tracing:
+    sampling:
+      probability: 1.0 # 0.0 ~ 1.0 사이 값(모든 요청을 트레이싱하려면1.0)
+
+logging:
+  pattern:
+    level: "%5p [%X{traceId},%X{spanId}]" # 로그에traceId, spanId 추가

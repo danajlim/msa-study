@@ -37,6 +37,19 @@ spring:
                 - AddAuthenticationHeader
     config:
       enabled: false
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
+logging:
+  pattern:
+    level: "%5p [%X{traceId},%X{spanId}]"
+
 jwt:
   header: Authorization
   secret-key: AADfaskllew32dsfasdTG764Gdslkj298GsWg86Gkalsdjfalkdsjfkladsjfklasdjfkwejqtklfksadnfklsadjmfkl
