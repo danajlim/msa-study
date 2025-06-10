@@ -12,3 +12,10 @@ eureka:
   server:
     eviction-interval-timer-in-ms: 5000
     renewal-percent-threshold: 0.85
+spring:
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  cloud:
+    config:
+      enabled: false
